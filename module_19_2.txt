@@ -1,0 +1,22 @@
+Запросы QuerySet
+
+from task1.models import Buyer, Game
+
+Регистрация покупателей
+buyer1 = Buyer.objects.create(name='Максим', balance=100.00, age=24)
+buyer2 = Buyer.objects.create(name='Данила', balance=50.00, age=52)
+buyer3 = Buyer.objects.create(name='Сергей', balance=150.00, age=16)
+
+Создание игр
+game1 = Game.objects.create(title='Скадинавский бой', cost=20.00, size=1.5, description='Игра года', age_limited=False)
+game2 = Game.objects.create(title='Каркассон', cost=30.00, size=2.0, description='Проверенно временем', age_limited=True)
+game3 = Game.objects.create(title='Бэнг!', cost=40.00, size=3.0, description='Хит продаж', age_limited=False)
+
+
+
+fst_buyer = Buyer.objects.get(age__lt=18)
+sec_buyer, thrd_buyer = Buyer.objects.filter(age__gt=18)у
+
+Game.objects.get(id=3).buyer.set((fst_buyer, sec_buyer, thrd_buyer))
+Game.objects.get(id=1).buyer.set((sec_buyer, thrd_buyer))
+Game.objects.get(id=2).buyer.set([thrd_buyer])
