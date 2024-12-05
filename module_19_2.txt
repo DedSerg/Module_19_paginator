@@ -3,9 +3,9 @@
 from task1.models import Buyer, Game
 
 Регистрация покупателей
-buyer1 = Buyer.objects.create(name='Максим', balance=100.00, age=24)
-buyer2 = Buyer.objects.create(name='Данила', balance=50.00, age=52)
-buyer3 = Buyer.objects.create(name='Сергей', balance=150.00, age=16)
+first_buyer = Buyer.objects.create(name='Максим', balance=100.00, age=24)
+second_buyer= Buyer.objects.create(name='Данила', balance=50.00, age=52)
+third_buyer = Buyer.objects.create(name='Сергей', balance=150.00, age=16)
 
 Создание игр
 game1 = Game.objects.create(title='Скадинавский бой', cost=20.00, size=1.5, description='Игра года', age_limited=False)
@@ -14,9 +14,9 @@ game3 = Game.objects.create(title='Бэнг!', cost=40.00, size=3.0, description
 
 
 
-fst_buyer = Buyer.objects.get(age__lt=18)
-sec_buyer, thrd_buyer = Buyer.objects.filter(age__gt=18)у
+first_buyer = Buyer.objects.get(age__lt=18)
+second_buyer, third_buyer = Buyer.objects.filter(age__gt=18)
 
-Game.objects.get(id=3).buyer.set((fst_buyer, sec_buyer, thrd_buyer))
-Game.objects.get(id=1).buyer.set((sec_buyer, thrd_buyer))
-Game.objects.get(id=2).buyer.set([thrd_buyer])
+Game.objects.get(id=10).buyer.set((third_buyer, second_buyer, first_buyer))
+Game.objects.get(id=11).buyer.set((second_buyer, third_buyer))
+Game.objects.get(id=12).buyer.set([third_buyer])
