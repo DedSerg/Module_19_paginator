@@ -1,23 +1,96 @@
-# from django.shortcuts import render
-#
-# # Create your views here.
-# from task1.models import Buyer, Game
-#
-# # Создание покупателей
-# buyer1 = Buyer.objects.create(name='Alice', balance=100.00, age=25)  # Старше 18
-# buyer2 = Buyer.objects.create(name='Bob', balance=50.00, age=17)    # Младше 18
-# buyer3 = Buyer.objects.create(name='Charlie', balance=150.00, age=30)  # Старше 18
-#
-# # Создание игр
-# game1 = Game.objects.create(title='Game 1', cost=20.00, size=1.5, description='Fun game', age_limited=False)  # Без ограничения
-# game2 = Game.objects.create(title='Game 2', cost=30.00, size=2.0, description='Exciting game', age_limited=True)  # С ограничением
-# game3 = Game.objects.create(title='Game 3', cost=40.00, size=3.0, description='Adventure game', age_limited=False)  # Без ограничения
-#
-# # Пример вывода данных для проверки
-# print(f'Buyers:')
-# for buyer in Buyer.objects.all():
-#     print(f'- {buyer.name}, Age: {buyer.age}, Balance: {buyer.balance}')
-#
-# print(f'\nGames:')
-# for game in Game.objects.all():
-#     print(f'- {game.title}, Cost: {game.cost}, Age Limited: {game.age_limited}')
+from django.shortcuts import render, redirect
+
+# Create your views here.
+from django.views.generic import TemplateView
+from django.http import HttpResponse
+from pyexpat.errors import messages
+from django.contrib import messages
+from .forms import UserRegister
+from .models import *
+
+
+class platform_game(TemplateView):
+    template_name = 'platform.html'
+
+
+class cart_game(TemplateView):
+    template_name = 'cart.html'
+
+
+def menu_game(request):
+    # mydict = {'games': ["Atomic Heart", "Cyberpunk 2077"]}
+    mydict = Game.objects.all().values()
+    context = {
+        'mydict': mydict,
+    }
+    return render(request, 'games.html', context)
+
+
+def sign_up_by_html(request):
+    users = []
+    users1 = Buyer.objects.all().values()
+    n_users = len(users1)
+    for i in range(n_users):
+        users.append(users1[i]['name'])
+
+    info = {}
+
+    if request.method == 'POST':
+        user_have = False
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        repeat_password = request.POST.get('repeat_password')
+        age = int(request.POST.get('age'))
+        is_user = username in users
+        if password == repeat_password:
+            if age >= 18:
+                if is_user == False:
+                    user_have = True
+                else:
+                    info['error'] = 'Такой покупатель уже существует'
+            else:
+                info['error'] = 'Вы должны быть старше 18 лет'
+        else:
+            info['error'] = 'Пароль не совпадает'
+
+        if user_have:
+            message = (f'Добро пожаловать, {username}!')
+            Buyer.objects.create(name=username, balance=0, age=age)
+        else:
+            message = info['error']
+        return HttpResponse(message)
+    return render(request, 'registration_page.html', info)
+
+
+def sign_up_by_django(request):
+    if request.method == 'POST':
+        form = UserRegister(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            repeat_password = form.cleaned_data['repeat_password']
+            age = int(form.cleaned_data['age'])
+
+            # Проверка существования пользователя
+            if Buyer.objects.filter(name=username).exists():
+                messages.error(request, 'Такой покупатель уже существует.')
+                return render(request, 'registration_page.html', {'form': form})
+
+            if password != repeat_password:
+                messages.error(request, 'Пароли не совпадают.')
+                return render(request, 'registration_page.html', {'form': form})
+
+            if age < 18:
+                messages.error(request, 'Вы должны быть старше 18 лет.')
+                return render(request, 'registration_page.html', {'form': form})
+
+            # Если все проверки пройдены, зарегистрировать пользователя
+            Buyer.objects.create(name=username, balance=0, age=age)
+            messages.success(request, f'Добро пожаловать, {username}!')
+
+            return redirect('home')  # Перенаправление на главную страницу после успешной регистрации
+
+    else:
+        form = UserRegister()
+
+    return render(request, 'registration_page.html', {'form': form})

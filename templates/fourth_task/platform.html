@@ -1,0 +1,13 @@
+{% extends "menu.html" %}
+
+{% block pagename %}
+    <h1>Главная страница</h1>
+{% endblock %}
+
+{% block menu %}
+    {{ block.super }} <!-- Убедитесь, что у вас есть блок menu в menu.html -->
+{% endblock %}
+
+{% block content %}
+    <h2>Добро пожаловать!</h2>
+{% endblock %}

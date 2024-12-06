@@ -1,0 +1,73 @@
+body {
+    font-family:  'Times New Roman', sans-serif; /* Шрифт для всего документа */
+    font-size: 20pt
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9; /* Цвет фона */
+}
+form {
+    font-size: 10pt;
+    background-color: #ADD8E6; /* Цвет фона */
+
+
+}
+
+header h1 {
+    font-family: 'Times New Roman', sans-serif;
+    font-size: 16pt;
+    text-transform: uppercase;
+    text-align: center;
+    background-color: #ADD8E6;
+}
+
+nav {
+    background-color: #e6f7ff; /* Цвет фона навигации */
+    padding: 10px 0; /* Отступы для навигации */
+}
+
+nav a {
+
+    color: #000080; /* Цвет ссылок */
+    font-weight: bold; /* Жирный текст для ссылок */
+}
+
+.register-button {
+    position: absolute; /* Устанавливаем абсолютное позиционирование */
+    top: 10px; /* Отступ сверху */
+    right: 10px; /* Отступ справа */
+    display: inline-block; /* Позволяет задавать размеры и отступы */
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    background-color: #3498db; /* Цвет фона кнопки */
+    color: white; /* Цвет текста кнопки */
+    text-decoration: none; /* Убирает подчеркивание текста */
+    border-radius: 5px; /* Закругление углов */
+    font-size: 16px; /* Размер шрифта */
+    transition: background-color 0.3s; /* Плавный переход цвета */
+
+.main {
+    color: #02550
+    padding: 20px; /* Отступы для основного контента */
+}
+
+main a {
+    color: red; /* Задает красный цвет текста */
+}
+
+
+
+
+.footer {
+    background-color: #333; /* Цвет фона подвала */
+    color: red; /* Цвет текста */
+    text-align: center; /* Выравнивание текста по центру */
+    padding: 20px 0; /* Отступы сверху и снизу */
+    position: relative; /* Позиционирование */
+    bottom: 0;
+    width: 100%;
+}
+
+.footer p {
+    margin: 0; /* Убираем отступы у абзаца */
+    font-size: 14px; /* Размер шрифта */
+    color: red; /* Цвет текста */
+}
