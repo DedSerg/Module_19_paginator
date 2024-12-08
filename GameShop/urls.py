@@ -19,10 +19,14 @@ from django.urls import path
 from task1.views import platform_game, cart_game, menu_game
 from task1.views import sign_up_by_html, sign_up_by_django
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', platform_game.as_view(), name='home'),  # Главная страница
     path('platform/games/', menu_game, name='menu_game'),
     path('platform/cart/', cart_game.as_view(), name='cart_game'),
     path('django_sign_up/', sign_up_by_django, name='django_sign_up'),
+
+
 ]

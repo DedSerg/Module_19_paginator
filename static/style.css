@@ -60,14 +60,23 @@ main a {
     background-color: #333; /* Цвет фона подвала */
     color: red; /* Цвет текста */
     text-align: center; /* Выравнивание текста по центру */
-    padding: 20px 0; /* Отступы сверху и снизу */
+    padding: 40px 40px; /* Отступы сверху и снизу */
     position: relative; /* Позиционирование */
     bottom: 0;
     width: 100%;
+    margin-top: 50px; /* Или любое другое значение */
+
 }
 
 .footer p {
     margin: 0; /* Убираем отступы у абзаца */
-    font-size: 14px; /* Размер шрифта */
+    font-size: 12px; /* Размер шрифта */
     color: red; /* Цвет текста */
+    margin-top: 50px; /* Или любое другое значение */
+    text-align: center; /* Выравнивание по центру (по желанию) */
+}
+}
+
+.button {
+    margin-top: 40px; /* Установите нужное значение */
 }
