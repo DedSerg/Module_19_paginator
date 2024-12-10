@@ -1,21 +1,73 @@
 {% extends "menu.html" %}
 
-{% block pagename %}
-    <h1>Настольные игры</h1>
-{% endblock %}
-{% block menu %}
-    {{block.super}}
-{% endblock %}
+{% block title %}Каталог товаров{% endblock %}
+
 {% block content %}
-    {% for game in mydict %}
-        <ul>
+<h2>Каталог товаров</h2>
 
-            <li>{{ game.title }} | {{ game.description}}. Стоимость: {{ game.cost }} <button>Купить</button> </li>
-        </ul>
-    {% endfor %}
+<!-- Сетка товаров -->
+<div class="container">
+    <div class="row">
+        {% for game in page_obj %}
+        <div class="col-md-4 mb-4"> <!-- Колонка для карточки товара -->
+            <div class="card h-100"> <!-- Карточка с высотой, заполняющей колонку -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ game.title }}</h5> <!-- Название товара -->
+                    <p class="card-text">{{ game.description }}</p> <!-- Описание товара -->
+                    <p class="card-text"><strong>{{ game.cost }} ₽</strong></p> <!-- Цена товара -->
+                    <button type="submit">Купить</button>  <!-- Кнопка "Купить" -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Навигация по страницам (пагинация) -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1">Назад</a> <!-- Ссылка на первую страницу -->
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a> <!-- Ссылка на предыдущую страницу -->
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">Назад</span> <!-- Заблокированная кнопка, если предыдущей страницы нет -->
+        </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+            <span class="page-link">{{ page_obj.number }}</span> <!-- Активная страница -->
+        </li>
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num != page_obj.number %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a> <!-- Ссылка на соседние страницы -->
+            </li>
+            {% else %}
+            <li class="page-item active">
+                <span class="page-link">{{ num }}</span> <!-- Активная страница -->
+            </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Вперёд</a> <!-- Ссылка на следующую страницу -->
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Вперёд</a> <!-- Ссылка на последнюю страницу -->
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">Вперёд</span> <!-- Заблокированная кнопка, если следующей страницы нет -->
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
 {% endblock %}
-
-users1 = Buyer.objects.all().values()
-    n_users=len(users1)
-    for i in range(n_users):
-        users.append(users1[i]['name'])

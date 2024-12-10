@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.shortcuts import render
+from django.core.paginator import Paginator
 
 # Create your views here.
 from django.views.generic import TemplateView
-from django.http import HttpResponse
 from pyexpat.errors import messages
-from django.contrib import messages
+
 from .forms import UserRegister
 from .models import *
 
@@ -20,11 +23,10 @@ class cart_game(TemplateView):
 def menu_game(request):
     # mydict = {'games': ["Atomic Heart", "Cyberpunk 2077"]}
     mydict = Game.objects.all().values()
-    context = {
-        'mydict': mydict,
-    }
-    return render(request, 'games.html', context)
-
+    paginator = Paginator(mydict, 6)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'games.html', {'page_obj': page_obj})
 
 def sign_up_by_html(request):
     users = []
