@@ -78,8 +78,13 @@ WSGI_APPLICATION = 'GameShop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+
+        'NAME': 'postgres', # Имя базы данных
+        'USER': 'postgres', # Пользователь PostgreSQL
+        'PASSWORD': 'Serg1969', # Пароль PostgreSQL
+        'HOST': 'localhost', # Адрес сервера базы данных
+        'PORT': '5432', # Порт подключения
 
     }
 }
